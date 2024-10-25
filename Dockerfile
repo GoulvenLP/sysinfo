@@ -9,7 +9,7 @@ WORKDIR /app
 # install system packages
 RUN apk update
 RUN apk add npm
-RUN apk add nodejs
+RUN apk add --no-cache nodejs
 
 
 # copy physical project to container
@@ -32,17 +32,19 @@ FROM alpine:3.15 AS runner
 # working directory
 WORKDIR /app
 
+# install node to be able to run the API
+RUN apk add --no-cache nodejs
+
 # add user node & group node
 RUN addgroup -S node && adduser -S -G node node
 
 # copy with node privileges
 COPY --chown=node:node --from=builder /app/prod_node_modules /app/node_modules
 COPY --chown=node:node --from=builder /app/dist /app/dist
-# build with npm
 
 # downgrade privileges
 USER node
 
 # execution
-CMD ["npm", "run", "start"]
+CMD ["node", "/app/dist/index.js"]
 
