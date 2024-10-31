@@ -8,11 +8,12 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: DOCKER #environment name where secrets are stored
 
     steps:
       # Checkout du code source
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # Se connecter à Docker Hub
       - name: Log in to DockerHub
