@@ -14,6 +14,7 @@ RUN apk add --no-cache nodejs
 
 # copy physical project to container
 COPY src/methods /app/src/methods
+COPY src/index.ts /app/src/index.ts
 COPY package.json /app/package.json
 COPY tsconfig.json /app/tsconfig.json
 
@@ -47,4 +48,3 @@ USER node
 
 # execution
 CMD ["node", "/app/dist/index.js"]
-
